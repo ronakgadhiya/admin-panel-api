@@ -1,10 +1,7 @@
 import mongoose, { Schema } from 'mongoose'
+import { Iuser } from '../Types/Iuser'
 const UserSchema: Schema = new Schema(
     {
-      profileImage: {
-        type: String,
-        default: '',
-      },
       name: {
         type: String,
         default: '',
@@ -24,6 +21,6 @@ const UserSchema: Schema = new Schema(
     },
     { timestamps: true },
   )
-  const User = mongoose.model('User', UserSchema)
+  const User = mongoose.model<Iuser>('User', UserSchema)
   export default User
   
