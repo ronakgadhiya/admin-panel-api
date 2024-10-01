@@ -5,7 +5,7 @@ import { StatusCodes } from '../Helper/Core/ApiResponse';
 import Logger from '../Helper/Core/Logger';
 import User from '../Models/User';
 import { IApiRequest } from '../Types/Core';
-import { createUser } from '../Validations/UserValidation';
+import { createUser, userLogin } from '../Validations/UserValidation';
 
 export const CreateUser = async (req: IApiRequest, res: Response) => {
     try {
@@ -46,3 +46,25 @@ export const CreateUser = async (req: IApiRequest, res: Response) => {
         ));
     }
 }
+
+
+export const UserLogin = async (req: IApiRequest,res:Response) => {
+    try{
+        const userloginValidate = await userLogin.validateAsync(req.body)
+        if(!userloginValidate){
+            return res.status(StatusCodes.BAD_REQUEST).json(ApiResponse.error(
+                [],
+                StatusCodes.BAD_REQUEST,
+                "Invalid Request Error."
+            ))
+        }
+        return true;
+    }catch(error:any){
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ApiResponse.error(
+            error.isJoi === true ? error.message : error,
+            StatusCodes.INTERNAL_SERVER_ERROR,
+            error.message
+        ))
+    }
+}
+

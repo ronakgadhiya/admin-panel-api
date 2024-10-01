@@ -14,5 +14,4 @@ router.use('/auth', AuthRoute)
 router.use('/user', JWT.verifyToken, UserRoute)
 
 
-
 export default router
